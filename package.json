@@ -1,0 +1,24 @@
+{
+  "name": "nodejs_mysql_crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OukaMiyuki/NodeJs_CRUD_MySQL.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mysql",
+    "crud"
+  ],
+  "author": "Ouka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OukaMiyuki/NodeJs_CRUD_MySQL/issues"
+  },
+  "homepage": "https://github.com/OukaMiyuki/NodeJs_CRUD_MySQL#readme"
+}
