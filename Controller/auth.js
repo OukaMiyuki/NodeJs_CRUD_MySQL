@@ -52,4 +52,62 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.post('/login', async (req, res) => {
+    var post = {
+        username: req.body.username,
+        password: req.body.password
+    }
+
+    var query = "SELECT * FROM ?? WHERE ??=? AND ??=?";
+    var table = ["user", "username", post.username, "password", md5(post.password)];
+
+    query = mysql.format(query, table);
+
+    try{
+        await conn.query(query, async (error, rows) => {
+            if(error){
+                console.log(error);
+            } else{
+                if(rows.length === 1){
+                    var token = jwt.sign({rows}, configSecret.secret, {
+                        expiresIn: 1440
+                    });
+                    id_user = rows[0].id;
+
+                    var data = {
+                        id_user: id_user,
+                        access_token: token,
+                        ip_address: ip.address()
+                    }
+
+                    var query = "INSERT INTO ?? SET ?";
+                    var table = ["akses_token"];
+                    query = mysql.format(query, table);
+
+                    try{
+                        await conn.query(query, data, (error, rows) => {
+                            if(error){
+                                console.log(error);
+                            }else {
+                                res.json({
+                                    success: true,
+                                    message:'Token JWT tergenerate!',
+                                    token:token,
+                                    currUser: data.id_user
+                                });
+                            }
+                        });
+                    } catch(err){
+                        return response.ok('500', err.message, res);
+                    }
+                } else{
+                    res.json({"Error": true, "Message":"Email atau password salah!"});
+                }
+            }
+        });
+    } catch(err){
+        return response.ok('500', err.message, res);
+    }
+});
+
 module.exports = router;
