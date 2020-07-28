@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express(); //global function to call expressjs
+const mysql = require('mysql');
 require('./Web/Routes')(app);
 
 const port = 3000;
